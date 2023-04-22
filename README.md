@@ -69,10 +69,12 @@ Req.get!(req, url: "/repos/elixir-mint/mint").body["description"]
 See [`Req.request/1`] for more information on available
 options.
 
-Virtually all of Req's features are broken down into individual pieces - steps. Req works by running
-the request struct through these steps. You can easily reuse or rearrange built-in steps or write new
-ones. Importantly, steps are just regular functions. Here is another example where we append a request
-step that inspects the URL just before requesting it:
+## Steps
+
+Req features are implemented using steps: functions that operate on a request or response.
+Steps are attached to a `%Req.Request{}` struct and run in order when a request is made.
+You can rearrange built-in steps or write new ones yourself. For instance, Here's how you
+would append a request step that inspects the URL right before the request is made:
 
 ```elixir
 req =
@@ -88,6 +90,8 @@ Req.get!(req, url: "/repos/wojtekmach/req").body["description"]
 # Outputs: "https://api.github.com/repos/wojtekmach/req"
 #=> "Req is a batteries-included HTTP client for Elixir."
 ```
+
+### Plugins
 
 Custom steps can be packaged into plugins so that they are even easier to use by others.
 Here are some examples:
